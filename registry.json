@@ -1,0 +1,165 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "pinball-ui",
+  "homepage": "https://pinball-ui.vercel.app",
+  "items": [
+    {
+      "name": "toggle",
+      "type": "registry:file",
+      "title": "Pinball UI Toggle",
+      "description": "A switch whose knob is a chrome pinball in a short lane. Flip it and the ball is kicked across, hits the far wall, rocks in its seat and settles, and the lamp under the on end lights. One file of about 848 KB with its photographs and sounds inside it, no dependencies, defines <pinball-toggle>.",
+      "author": "Justin Finkelman <https://github.com/finktheartist>",
+      "categories": [
+        "switch",
+        "toggle",
+        "pinball",
+        "webgl",
+        "animation"
+      ],
+      "files": [
+        {
+          "path": "toggle/toggle.js",
+          "type": "registry:file",
+          "target": "~/public/pinball-ui/toggle.js"
+        }
+      ],
+      "docs": "Pinball UI Toggle is a plain script that registers a custom element. Load /pinball-ui/toggle.js with a script tag (not a module), then use <pinball-toggle></pinball-toggle>. Read el.checked and listen for change. Works in forms with a name, like a checkbox. Size it with --pb-size. More: https://pinball-ui.vercel.app"
+    },
+    {
+      "name": "slider",
+      "type": "registry:file",
+      "title": "Pinball UI Slider",
+      "description": "A slider whose thumb is a chrome pinball rolling along a lane of ten lamps. Each lamp lights as the ball reaches it and goes out as the ball rolls back past it, so the lit lamps are the filled part of the track. One file of about 607 KB with its photographs and sounds inside it, no dependencies, defines <pinball-slider>.",
+      "author": "Justin Finkelman <https://github.com/finktheartist>",
+      "categories": [
+        "slider",
+        "range",
+        "pinball",
+        "webgl",
+        "animation"
+      ],
+      "files": [
+        {
+          "path": "slider/slider.js",
+          "type": "registry:file",
+          "target": "~/public/pinball-ui/slider.js"
+        }
+      ],
+      "docs": "Pinball UI Slider is a plain script that registers a custom element. Load /pinball-ui/slider.js with a script tag (not a module), then use <pinball-slider value=\"40\" min=\"0\" max=\"100\"></pinball-slider>. Read el.value; it fires input while it moves and change when let go. Works in forms with a name. Size it with --pb-size. More: https://pinball-ui.vercel.app"
+    },
+    {
+      "name": "plunger",
+      "type": "registry:file",
+      "title": "Pinball UI Plunger",
+      "description": "A send button you pull. It is a bare pinball shooter rod: knob, rod, spring and rubber tip. Pull the knob all the way back and a ball drops in front of the tip; let go and the plunger knocks the ball off the edge of the screen and fires send. One file of about 432 KB with its photographs and sounds inside it, no dependencies, defines <pinball-plunger>.",
+      "author": "Justin Finkelman <https://github.com/finktheartist>",
+      "categories": [
+        "button",
+        "send",
+        "confirm",
+        "pinball",
+        "webgl",
+        "animation"
+      ],
+      "files": [
+        {
+          "path": "plunger/plunger.js",
+          "type": "registry:file",
+          "target": "~/public/pinball-ui/plunger.js"
+        }
+      ],
+      "docs": "Pinball UI Plunger is a plain script that registers a custom element. Load /pinball-ui/plunger.js with a script tag (not a module), then use <pinball-plunger label=\"Send\"></pinball-plunger>. Listen for send; el.fire() does a full pull for you. Size it with --pb-size. More: https://pinball-ui.vercel.app"
+    },
+    {
+      "name": "stepper",
+      "type": "registry:file",
+      "title": "Pinball UI Stepper",
+      "description": "A number stepper made of two pinball flippers either side of a two-digit score reel. Press a flipper and it snaps up, the lamp flashes and the drums roll to the new number, carrying into the tens like an old score counter. One file of about 779 KB with its photographs and sounds inside it, no dependencies, defines <pinball-stepper>.",
+      "author": "Justin Finkelman <https://github.com/finktheartist>",
+      "categories": [
+        "stepper",
+        "number",
+        "counter",
+        "pinball",
+        "webgl",
+        "animation"
+      ],
+      "files": [
+        {
+          "path": "stepper/stepper.js",
+          "type": "registry:file",
+          "target": "~/public/pinball-ui/stepper.js"
+        }
+      ],
+      "docs": "Pinball UI Stepper is a plain script that registers a custom element. Load /pinball-ui/stepper.js with a script tag (not a module), then use <pinball-stepper value=\"4\" min=\"0\" max=\"99\"></pinball-stepper>. Read el.value; it fires input and change. Works in forms with a name. Size it with --pb-size. More: https://pinball-ui.vercel.app"
+    },
+    {
+      "name": "targets",
+      "type": "registry:file",
+      "title": "Pinball UI Drop targets",
+      "description": "A row of up to four checkboxes as a bank of pinball drop targets with your labels printed on them. Tick one and a ball rolls in, knocks its target down and lights its lamp; untick it and the target springs back up. Knock all four down for a bonus chime. One file of about 838 KB with its photographs and sounds inside it, no dependencies, defines <pinball-targets>.",
+      "author": "Justin Finkelman <https://github.com/finktheartist>",
+      "categories": [
+        "checkbox",
+        "checklist",
+        "pinball",
+        "webgl",
+        "animation"
+      ],
+      "files": [
+        {
+          "path": "targets/targets.js",
+          "type": "registry:file",
+          "target": "~/public/pinball-ui/targets.js"
+        }
+      ],
+      "docs": "Pinball UI Drop targets is a plain script that registers a custom element. Load /pinball-ui/targets.js with a script tag (not a module), then use <pinball-targets items=\"EMAIL,PUSH,TEXT,CALLS\" checked=\"0,2\"></pinball-targets>. Read el.selected (the ticked items) or el.checked (an array of booleans); it fires change and, when all are ticked, bonus. Works in forms with a name. Size it with --pb-size. More: https://pinball-ui.vercel.app"
+    },
+    {
+      "name": "drain",
+      "type": "registry:file",
+      "title": "Pinball UI Drain",
+      "description": "A delete button with an undo window, built from a pinball outhole and a SHOOT AGAIN lamp. Press or drag the ball into the drain to delete; SHOOT AGAIN blinks while you can still undo, and pressing it kicks the ball back out. One file of about 888 KB with its photographs and sounds inside it, no dependencies, defines <pinball-drain>.",
+      "author": "Justin Finkelman <https://github.com/finktheartist>",
+      "categories": [
+        "delete",
+        "undo",
+        "button",
+        "pinball",
+        "webgl",
+        "animation"
+      ],
+      "files": [
+        {
+          "path": "drain/drain.js",
+          "type": "registry:file",
+          "target": "~/public/pinball-ui/drain.js"
+        }
+      ],
+      "docs": "Pinball UI Drain is a plain script that registers a custom element. Load /pinball-ui/drain.js with a script tag (not a module), then use <pinball-drain window=\"6000\" label=\"Delete draft\"></pinball-drain>. Listen for delete, undo and commit (the delete is final); el.reset() serves a new ball. Size it with --pb-size. More: https://pinball-ui.vercel.app"
+    },
+    {
+      "name": "bumper",
+      "type": "registry:file",
+      "title": "Pinball UI Pop bumpers",
+      "description": "Pinball pop bumpers as buttons. One file defines two: <pinball-bumper>, a single bumper you press like a clap or upvote button, and <pinball-bumpers>, a triangle of three that a ball ricochets around when you press it, scoring as it goes. One file of about 713 KB with its photographs and sounds inside it, no dependencies, defines <pinball-bumper> and <pinball-bumpers>.",
+      "author": "Justin Finkelman <https://github.com/finktheartist>",
+      "categories": [
+        "button",
+        "like",
+        "counter",
+        "pinball",
+        "webgl",
+        "animation"
+      ],
+      "files": [
+        {
+          "path": "bumper/bumper.js",
+          "type": "registry:file",
+          "target": "~/public/pinball-ui/bumper.js"
+        }
+      ],
+      "docs": "Pinball UI Pop bumpers is a plain script that registers a custom element. Load /pinball-ui/bumper.js with a script tag (not a module), then use <pinball-bumper cap=\"+1\"></pinball-bumper> for one button, or <pinball-bumpers caps=\"100,500,100\"></pinball-bumpers> for the cluster. Both fire hit with { points, score, combo }. Size it with --pb-size. More: https://pinball-ui.vercel.app"
+    }
+  ]
+}

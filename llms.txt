@@ -1,0 +1,34 @@
+# Pinball UI
+
+> Seven ordinary UI controls as real pinball parts: photographed bodies (a lane, a shooter rod, flippers and a score reel, a drop-target bank, an outhole, pop bumpers), a chrome ball drawn live in WebGL that mirrors what is under it, and recorded sounds (solenoids, relays, chimes, a rolling ball). Each is one plain script that registers a custom element, with its photographs and sounds inside it: no dependencies, no build step, no other files to fetch. MIT licensed. No real machine's names, art or logos are used.
+
+Live gallery: https://pinball-ui.vercel.app
+Source: https://github.com/finktheartist/pinball-ui
+
+## Drop-in controls
+
+Each is one plain script that registers a custom element. Load it with a script tag, not as a module. Do not rewrite or split the file: the photographs and sounds are inside it as data. Each file carries a copy of the shared core; the first one loaded sets window.PinballKit and the rest reuse it, so any mix shares one clock and one WebGL context.
+
+- [Toggle](https://pinball-ui.vercel.app/toggle/toggle.js) (switch, about 848 KB): A switch whose knob is a chrome pinball in a short lane. Flip it and the ball is kicked across, hits the far wall, rocks in its seat and settles, and the lamp under the on end lights. `<pinball-toggle>`: Use <pinball-toggle></pinball-toggle>. Read el.checked and listen for change. Works in forms with a name, like a checkbox. [Docs](https://github.com/finktheartist/pinball-ui/blob/main/toggle/README.md)
+- [Slider](https://pinball-ui.vercel.app/slider/slider.js) (slider, about 607 KB): A slider whose thumb is a chrome pinball rolling along a lane of ten lamps. Each lamp lights as the ball reaches it and goes out as the ball rolls back past it, so the lit lamps are the filled part of the track. `<pinball-slider>`: Use <pinball-slider value="40" min="0" max="100"></pinball-slider>. Read el.value; it fires input while it moves and change when let go. Works in forms with a name. [Docs](https://github.com/finktheartist/pinball-ui/blob/main/slider/README.md)
+- [Plunger](https://pinball-ui.vercel.app/plunger/plunger.js) (pull to send, about 432 KB): A send button you pull. It is a bare pinball shooter rod: knob, rod, spring and rubber tip. Pull the knob all the way back and a ball drops in front of the tip; let go and the plunger knocks the ball off the edge of the screen and fires send. `<pinball-plunger>`: Use <pinball-plunger label="Send"></pinball-plunger>. Listen for send; el.fire() does a full pull for you. [Docs](https://github.com/finktheartist/pinball-ui/blob/main/plunger/README.md)
+- [Stepper](https://pinball-ui.vercel.app/stepper/stepper.js) (stepper, about 779 KB): A number stepper made of two pinball flippers either side of a two-digit score reel. Press a flipper and it snaps up, the lamp flashes and the drums roll to the new number, carrying into the tens like an old score counter. `<pinball-stepper>`: Use <pinball-stepper value="4" min="0" max="99"></pinball-stepper>. Read el.value; it fires input and change. Works in forms with a name. [Docs](https://github.com/finktheartist/pinball-ui/blob/main/stepper/README.md)
+- [Drop targets](https://pinball-ui.vercel.app/targets/targets.js) (checkboxes, about 838 KB): A row of up to four checkboxes as a bank of pinball drop targets with your labels printed on them. Tick one and a ball rolls in, knocks its target down and lights its lamp; untick it and the target springs back up. Knock all four down for a bonus chime. `<pinball-targets>`: Use <pinball-targets items="EMAIL,PUSH,TEXT,CALLS" checked="0,2"></pinball-targets>. Read el.selected (the ticked items) or el.checked (an array of booleans); it fires change and, when all are ticked, bonus. Works in forms with a name. [Docs](https://github.com/finktheartist/pinball-ui/blob/main/targets/README.md)
+- [Drain](https://pinball-ui.vercel.app/drain/drain.js) (delete and undo, about 888 KB): A delete button with an undo window, built from a pinball outhole and a SHOOT AGAIN lamp. Press or drag the ball into the drain to delete; SHOOT AGAIN blinks while you can still undo, and pressing it kicks the ball back out. `<pinball-drain>`: Use <pinball-drain window="6000" label="Delete draft"></pinball-drain>. Listen for delete, undo and commit (the delete is final); el.reset() serves a new ball. [Docs](https://github.com/finktheartist/pinball-ui/blob/main/drain/README.md)
+- [Pop bumpers](https://pinball-ui.vercel.app/bumper/bumper.js) (button, about 713 KB): Pinball pop bumpers as buttons. One file defines two: <pinball-bumper>, a single bumper you press like a clap or upvote button, and <pinball-bumpers>, a triangle of three that a ball ricochets around when you press it, scoring as it goes. `<pinball-bumper> and <pinball-bumpers>`: Use <pinball-bumper cap="+1"></pinball-bumper> for one button, or <pinball-bumpers caps="100,500,100"></pinball-bumpers> for the cluster. Both fire hit with { points, score, combo }. [Docs](https://github.com/finktheartist/pinball-ui/blob/main/bumper/README.md)
+
+Install any one with the shadcn CLI: `npx shadcn add finktheartist/pinball-ui/NAME`, where NAME is toggle, slider, plunger, stepper, targets, drain, bumper. The file lands in `public/pinball-ui/`.
+
+Size each with the CSS variable --pb-size (its height). Set --pb-page to the page background as a hex colour so the ball's reflections match (default cream, #f3efe5). Attributes set the starting state; use properties and methods after that. Value controls (toggle, slider, stepper, targets) work in a form with a name. Sound plays after the first press on the page; the silent attribute mutes one control and PinballKit.sound = false mutes all. With prefers-reduced-motion the parts go straight to where they end up.
+
+## The skill
+
+- [pinball-ui skill](https://pinball-ui.vercel.app/skills/pinball-ui/SKILL.md): the workflow and rules these were made by. Install with `npx skills add finktheartist/pinball-ui`.
+- [core.js](https://pinball-ui.vercel.app/skills/pinball-ui/core.js): the shared core (the clock, the custom-element base, one WebGL context, the chrome ball's shader, the sounds).
+- [starter.html](https://pinball-ui.vercel.app/skills/pinball-ui/starter.html): the smallest whole example, a ball in a lane drawn without photographs.
+- [look.mjs](https://pinball-ui.vercel.app/skills/pinball-ui/look.mjs): photographs a page at chosen moments after an action and saves the frames side by side.
+
+## How it was made
+
+- [making-of/README.md](https://pinball-ui.vercel.app/making-of/README.md): the directions that were dropped, how the plates were made and lined up, how the ball is drawn, and where the sounds came from.
+- [making-of/prompts.md](https://pinball-ui.vercel.app/making-of/prompts.md): every image and sound prompt and setting.

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pinball UI</title>
+<meta name="description" content="Seven ordinary UI controls as real pinball parts: photographed bodies, a live chrome ball, recorded sounds. Each is a single file with no dependencies.">
+<meta property="og:title" content="Pinball UI">
+<meta property="og:description" content="Seven ordinary UI controls as real pinball parts.">
+<meta property="og:image" content="title.jpg">
+<style>
+  :root { --bg: #f3efe5; --ink: #2b2620; --dim: #7a7064; --line: #d9d1c1; --amber: #c9700f; --red: #b3322b; }
+  * { box-sizing: border-box; }
+  html { overflow-x: clip; background: var(--bg); }
+  body { margin: 0; color: var(--ink); font: 15px/1.5 Georgia, "Iowan Old Style", "Times New Roman", serif; overflow-x: clip; }
+  a { color: var(--red); } :focus-visible { outline: 2.5px solid var(--amber); outline-offset: 3px; }
+  .label { font: 600 11px/1.3 "Futura", "Century Gothic", "Avenir Next", "Trebuchet MS", sans-serif; letter-spacing: .16em; text-transform: uppercase; }
+  .pill { min-height: 34px; padding: 5px 14px; border: 1.5px solid var(--ink); border-radius: 999px; background: transparent; color: var(--ink); font: 600 11.5px/1.2 "Futura", "Century Gothic", "Avenir Next", "Trebuchet MS", sans-serif; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; cursor: pointer; display: inline-flex; align-items: center; }
+  .pill:hover { background: var(--ink); color: var(--bg); } .pill:active { translate: 0 1px; } .pill[aria-pressed="false"] { opacity: .55; }
+  .wrap { max-width: 1400px; margin: 0 auto; padding: 26px 16px 70px; }
+  header { max-width: 800px; margin: 0 auto; text-align: center; }
+  header img { display: block; width: 100%; height: auto; aspect-ratio: 1600 / 700; }
+  h1 { margin: 10px 0 0; font-size: 17px; letter-spacing: .28em; }
+  .lede { margin: 10px auto 0; max-width: 600px; color: var(--dim); font-size: 16px; }
+  .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 18px 0 0; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr)); gap: 30px 26px; margin-top: 46px; align-items: stretch; }
+  .item { min-width: 0; display: flex; flex-direction: column; border-top: 1.5px solid var(--ink); padding-top: 12px; }
+  .cap { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 0 2px; color: var(--dim); }
+  .cap h2 { margin: 0; color: var(--ink); font-size: 12.5px; white-space: nowrap; } .cap span { text-align: right; }
+  .stage { flex: 1; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 22px; min-height: 260px; padding: 34px 0 26px; }
+  .said { margin: 0; min-height: 20px; color: var(--amber); text-align: center; }
+  .acts { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-top: 10px; }
+  .note { margin: 56px auto 0; max-width: 640px; text-align: center; color: var(--dim); font-size: 14px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="title.jpg" width="1600" height="700" alt="Pinball UI: the controls laid out on cream, a chrome-ball toggle and slider, a shooter rod, flipper stepper, drop-target bank, drain and pop bumpers.">
+    <h1 class="label">Pinball UI</h1>
+    <p class="lede">Seven ordinary controls as real pinball parts. The bodies are photographs, the ball is chrome drawn live, and every flip, lamp and chime is a recorded sound. Each is a single file with no dependencies.</p>
+    <p class="links">
+      <a class="pill" href="https://github.com/finktheartist/pinball-ui" target="_blank" rel="noopener">The repo on GitHub</a>
+      <a class="pill" href="https://x.com/crtvTeknologist" target="_blank" rel="noopener">@crtvTeknologist on X</a>
+      <button class="pill" type="button" id="sound" aria-pressed="true">Sound on</button>
+    </p>
+  </header>
+  <main class="grid" id="grid"></main>
+  <p class="note">Everything here is live: use the controls. Sound starts with your first press. With <code>prefers-reduced-motion</code> the parts go straight to where they end up.</p>
+  <p class="sr" aria-live="polite" id="copied"></p>
+</div>
+<script src="../toggle/toggle.js"></script>
+<script src="../slider/slider.js"></script>
+<script src="../plunger/plunger.js"></script>
+<script src="../stepper/stepper.js"></script>
+<script src="../targets/targets.js"></script>
+<script src="../drain/drain.js"></script>
+<script src="../bumper/bumper.js"></script>
+<script>
+// The gallery: every control live on one page, with its install line and a prompt that hands a coding agent the real file.
+const REPO = 'finktheartist/pinball-ui', SITE = 'https://pinball-ui.vercel.app';
+const ITEMS = [
+  {
+    "id": "toggle",
+    "name": "Toggle",
+    "tag": "pinball-toggle",
+    "tags": "<pinball-toggle>",
+    "kind": "switch",
+    "size": "min(96px, 25vw)",
+    "html": "<pinball-toggle label=\"Push alerts\"></pinball-toggle>",
+    "docs": "then use <pinball-toggle></pinball-toggle>. Read el.checked and listen for change. Works in forms with a name, like a checkbox.",
+    "desc": "A switch whose knob is a chrome pinball in a short lane. Flip it and the ball is kicked across, hits the far wall, rocks in its seat and settles, and the lamp under the on end lights."
+  },
+  {
+    "id": "slider",
+    "name": "Slider",
+    "tag": "pinball-slider",
+    "tags": "<pinball-slider>",
+    "kind": "slider",
+    "size": "min(72px, 19vw)",
+    "html": "<pinball-slider value=\"40\" label=\"Volume\"></pinball-slider>",
+    "docs": "then use <pinball-slider value=\"40\" min=\"0\" max=\"100\"></pinball-slider>. Read el.value; it fires input while it moves and change when let go. Works in forms with a name.",
+    "desc": "A slider whose thumb is a chrome pinball rolling along a lane of ten lamps. Each lamp lights as the ball reaches it and goes out as the ball rolls back past it, so the lit lamps are the filled part of the track."
+  },
+  {
+    "id": "plunger",
+    "name": "Plunger",
+    "tag": "pinball-plunger",
+    "tags": "<pinball-plunger>",
+    "kind": "pull to send",
+    "size": "min(64px, 17vw)",
+    "html": "<pinball-plunger label=\"Send\"></pinball-plunger>",
+    "docs": "then use <pinball-plunger label=\"Send\"></pinball-plunger>. Listen for send; el.fire() does a full pull for you.",
+    "desc": "A send button you pull. It is a bare pinball shooter rod: knob, rod, spring and rubber tip. Pull the knob all the way back and a ball drops in front of the tip; let go and the plunger knocks the ball off the edge of the screen and fires send."
+  },
+  {
+    "id": "stepper",
+    "name": "Stepper",
+    "tag": "pinball-stepper",
+    "tags": "<pinball-stepper>",
+    "kind": "stepper",
+    "size": "min(104px, 26vw)",
+    "html": "<pinball-stepper value=\"4\" min=\"0\" max=\"99\" label=\"Players\"></pinball-stepper>",
+    "docs": "then use <pinball-stepper value=\"4\" min=\"0\" max=\"99\"></pinball-stepper>. Read el.value; it fires input and change. Works in forms with a name.",
+    "desc": "A number stepper made of two pinball flippers either side of a two-digit score reel. Press a flipper and it snaps up, the lamp flashes and the drums roll to the new number, carrying into the tens like an old score counter."
+  },
+  {
+    "id": "targets",
+    "name": "Drop targets",
+    "tag": "pinball-targets",
+    "tags": "<pinball-targets>",
+    "kind": "checkboxes",
+    "size": "min(136px, 36vw)",
+    "html": "<pinball-targets items=\"EMAIL,PUSH,TEXT,CALLS\" checked=\"0,2\" label=\"Alerts\"></pinball-targets>",
+    "docs": "then use <pinball-targets items=\"EMAIL,PUSH,TEXT,CALLS\" checked=\"0,2\"></pinball-targets>. Read el.selected (the ticked items) or el.checked (an array of booleans); it fires change and, when all are ticked, bonus. Works in forms with a name.",
+    "desc": "A row of up to four checkboxes as a bank of pinball drop targets with your labels printed on them. Tick one and a ball rolls in, knocks its target down and lights its lamp; untick it and the target springs back up. Knock all four down for a bonus chime."
+  },
+  {
+    "id": "drain",
+    "name": "Drain",
+    "tag": "pinball-drain",
+    "tags": "<pinball-drain>",
+    "kind": "delete and undo",
+    "size": "min(180px, 46vw)",
+    "html": "<pinball-drain window=\"6000\" label=\"Delete draft\"></pinball-drain>",
+    "docs": "then use <pinball-drain window=\"6000\" label=\"Delete draft\"></pinball-drain>. Listen for delete, undo and commit (the delete is final); el.reset() serves a new ball.",
+    "desc": "A delete button with an undo window, built from a pinball outhole and a SHOOT AGAIN lamp. Press or drag the ball into the drain to delete; SHOOT AGAIN blinks while you can still undo, and pressing it kicks the ball back out."
+  },
+  {
+    "id": "bumper",
+    "name": "Pop bumpers",
+    "tag": "pinball-bumpers",
+    "tags": "<pinball-bumper> and <pinball-bumpers>",
+    "kind": "button",
+    "size": "min(250px, 66vw)",
+    "html": "<pinball-bumpers caps=\"100,500,100\" label=\"Bonus bumpers\"></pinball-bumpers><pinball-bumper cap=\"+1\" points=\"1\" label=\"Clap\" style=\"--pb-size: min(84px, 22vw)\"></pinball-bumper>",
+    "docs": "then use <pinball-bumper cap=\"+1\"></pinball-bumper> for one button, or <pinball-bumpers caps=\"100,500,100\"></pinball-bumpers> for the cluster. Both fire hit with { points, score, combo }.",
+    "desc": "Pinball pop bumpers as buttons. One file defines two: <pinball-bumper>, a single bumper you press like a clap or upvote button, and <pinball-bumpers>, a triangle of three that a ball ricochets around when you press it, scoring as it goes."
+  }
+];
+const WIRE = {
+  toggle: (el, say) => { el.addEventListener('change', (e) => say(e.detail.checked ? 'On' : 'Off')); },
+  slider: (el, say) => { el.addEventListener('input', (e) => say(String(e.detail.value))); },
+  plunger: (el, say) => { let n = 0; el.addEventListener('send', () => say('Sent ' + ++n)); },
+  stepper: (el, say) => { el.addEventListener('input', (e) => say(String(e.detail.value).padStart(2, '0'))); },
+  targets: (el, say) => { const show = () => say(el.selected.length ? el.selected.join(' · ') : 'None'); el.addEventListener('change', show); el.addEventListener('bonus', () => say('All four')); show(); },
+  drain: (el, say) => { el.addEventListener('delete', () => say('Deleted. Undo?')); el.addEventListener('undo', () => say('Saved')); el.addEventListener('commit', () => { say('Gone'); setTimeout(() => { el.reset(); say(''); }, 1600); }); },
+  bumper: (el, say) => { el.addEventListener('hit', (e) => say('+' + e.detail.points + ' · ' + e.detail.score.toLocaleString())); },
+};
+const grid = document.getElementById('grid'), copied = document.getElementById('copied');
+const copy = async (btn, text) => { try { await navigator.clipboard.writeText(text); } catch { const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); } const was = btn.textContent; btn.textContent = 'Copied'; copied.textContent = 'Copied to the clipboard'; setTimeout(() => { btn.textContent = was; copied.textContent = ''; }, 1400); };
+for (const c of ITEMS) {
+  const s = document.createElement('section'); s.className = 'item'; s.id = c.id;
+  s.innerHTML = '<div class="cap label"><h2></h2><span></span></div><div class="stage">' + c.html + '</div><p class="said label" aria-hidden="true"></p><div class="acts"><button class="pill" type="button" data-a="install">Copy install</button><button class="pill" type="button" data-a="prompt">Copy a prompt</button><a class="pill" href="../' + c.id + '/">Open</a></div>';
+  s.querySelector('h2').textContent = c.name; s.querySelector('.cap span').textContent = c.kind;
+  s.querySelector('.stage').style.setProperty('--pb-size', c.size);
+  grid.appendChild(s);
+  const el = s.querySelector(c.tag), said = s.querySelector('.said');
+  WIRE[c.id](el, (t) => { said.textContent = t; });
+  const install = 'npx shadcn add ' + REPO + '/' + c.id;
+  const prompt = 'Add the Pinball UI "' + c.name + '" control to this project. It is one plain script with no dependencies that registers ' + c.tags + ': ' + c.desc + '\n\n1. Download ' + SITE + '/' + c.id + '/' + c.id + '.js into the folder this project serves static files from (for example public/pinball-ui/' + c.id + '.js), or run: ' + install + '\n2. Load it with a plain script tag, not as a module, and do not edit, split or re-bundle the file: its photographs and sounds are inside it as data.\n3. In the page, ' + c.docs + '\n4. Size it with the CSS variable --pb-size (its height), and set --pb-page to the page background colour as a hex value so the chrome ball reflects it. It plays sound after the first press; add the silent attribute to mute it.\n\nFull notes: https://github.com/' + REPO + '/blob/main/' + c.id + '/README.md';
+  s.querySelector('[data-a=install]').addEventListener('click', (e) => copy(e.currentTarget, install));
+  s.querySelector('[data-a=prompt]').addEventListener('click', (e) => copy(e.currentTarget, prompt));
+}
+const snd = document.getElementById('sound'); snd.onclick = () => { PinballKit.sound = !PinballKit.sound; snd.setAttribute('aria-pressed', String(PinballKit.sound)); snd.textContent = PinballKit.sound ? 'Sound on' : 'Sound off'; };
+</script>
+</body>
+</html>
